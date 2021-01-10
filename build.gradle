@@ -5,15 +5,17 @@ buildscript {
 
     dependencies {
         classpath 'gradle.plugin.net.minecrell:licenser:0.4.1'
+        classpath 'com.github.jengelman.gradle.plugins:shadow:4.0.1'
     }
 }
 
 defaultTasks 'licenseFormat', 'build'
 
-subprojects {
+allprojects {
     apply plugin: 'java'
     apply plugin: 'maven'
     apply plugin: 'net.minecrell.licenser'
+    apply plugin: 'com.github.johnrengelman.shadow'
 
     group = 'me.lucko.luckperms'
     version = '5.2-SNAPSHOT'
@@ -60,5 +62,35 @@ subprojects {
         mavenCentral()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://repo.lucko.me/' }
+        maven { url 'https://maven.aura-dev.team/repository/auradev-releases/' }
     }
+}
+
+dependencies {
+    compile project(':bukkit')
+    compile project(':bungee')
+    compile project(':sponge')
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'pluginVersion': project.ext.fullVersion
+        include 'plugin.yml'
+    }
+}
+
+shadowJar {
+    archiveName = "LuckPerms-Universal-${project.ext.fullVersion}.jar"
+
+    dependencies {
+        include(dependency('net.luckperms:.*'))
+        include(dependency('me.lucko.luckperms:.*'))
+        include(dependency('team.aura_dev.lib.multiplatformcore:MultiPlatformCore'))
+    }
+
+    relocate 'team.aura_dev.lib.multiplatformcore', 'me.lucko.luckperms.lib.multiplatformcore'
+}
+
+artifacts {
+    archives shadowJar
 }

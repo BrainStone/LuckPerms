@@ -1,7 +1,3 @@
-plugins {
-    id 'com.github.johnrengelman.shadow' version '2.0.4'
-}
-
 dependencies {
     compile project(':common')
 
@@ -23,24 +19,10 @@ shadowJar {
     dependencies {
         include(dependency('net.luckperms:.*'))
         include(dependency('me.lucko.luckperms:.*'))
+        include(dependency('team.aura_dev.lib.multiplatformcore:MultiPlatformCore'))
     }
 
-    relocate 'net.kyori.adventure', 'me.lucko.luckperms.lib.adventure'
-    relocate 'net.kyori.event', 'me.lucko.luckperms.lib.eventbus'
-    relocate 'com.github.benmanes.caffeine', 'me.lucko.luckperms.lib.caffeine'
-    relocate 'okio', 'me.lucko.luckperms.lib.okio'
-    relocate 'okhttp3', 'me.lucko.luckperms.lib.okhttp3'
-    relocate 'net.bytebuddy', 'me.lucko.luckperms.lib.bytebuddy'
-    relocate 'me.lucko.commodore', 'me.lucko.luckperms.lib.commodore'
-    relocate 'org.mariadb.jdbc', 'me.lucko.luckperms.lib.mariadb'
-    relocate 'com.mysql', 'me.lucko.luckperms.lib.mysql'
-    relocate 'org.postgresql', 'me.lucko.luckperms.lib.postgresql'
-    relocate 'com.zaxxer.hikari', 'me.lucko.luckperms.lib.hikari'
-    relocate 'com.mongodb', 'me.lucko.luckperms.lib.mongodb'
-    relocate 'org.bson', 'me.lucko.luckperms.lib.bson'
-    relocate 'redis.clients.jedis', 'me.lucko.luckperms.lib.jedis'
-    relocate 'org.apache.commons.pool2', 'me.lucko.luckperms.lib.commonspool2'
-    relocate 'ninja.leaping.configurate', 'me.lucko.luckperms.lib.configurate'
+    relocate 'team.aura_dev.lib.multiplatformcore', 'me.lucko.luckperms.lib.multiplatformcore'
 }
 
 artifacts {
